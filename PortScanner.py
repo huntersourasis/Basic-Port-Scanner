@@ -23,6 +23,13 @@ def getPortRange(portRange):
 # Thread-safe write lock
 lock = threading.Lock()
 
+# Get service name (or return unknown)
+def get_service_name(port):
+    try:
+        return socket.getservbyport(port)
+    except:
+        return "unknown"
+
 # Scan a single port
 def scan_port(host, port, fileName):
     try:
@@ -30,12 +37,13 @@ def scan_port(host, port, fileName):
             scanner_socket.settimeout(1)
             result = scanner_socket.connect_ex((host, port))
             if result == 0:
+                service = get_service_name(port)
                 with lock:
                     with open(f"{fileName}.txt", "a") as file:
-                        file.write(f"[+] Port {port} is OPEN\n")
-                    print(f"[+] Port {port} is OPEN")
-    except Exception:
-        pass  # Handle exception silently
+                        file.write(f"[+] Port {port} is OPEN ({service})\n")
+                    print(f"[+] Port {port} is OPEN ({service})")
+    except:
+        pass  # Ignore errors silently
 
 # Main logic
 if host:
