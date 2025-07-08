@@ -27,5 +27,5 @@ A fast and simple multithreaded TCP port scanner written in Python. It scans a t
 Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/port-scanner.git
-cd port-scanner
+git clone https://github.com/huntersourasis/Basic-Port-Scanner.git
+cd Basic-Port-Scanner
